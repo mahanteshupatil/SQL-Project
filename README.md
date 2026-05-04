@@ -25,7 +25,7 @@ Analyzed digital music store database in SQL Server to solve 8 business question
 `JOIN`, `GROUP BY`, `ORDER BY`, `COUNT()`, `SUM()`, `AVG()`, `DISTINCT`, `OFFSET FETCH`, Subqueries
 
 ## Tools
-SQL Server Management Studio 20, T-SQL
+SQL Server Management Studio 20, SQL server 2025
 
 ## How to Run
 1. Download both `.sql` files
