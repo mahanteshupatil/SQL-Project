@@ -1,0 +1,55 @@
+	         			-- DIGITAL MUSICAL STORE ANALYSIS --
+
+USE Music_Database
+
+/*Q1. Write query to return the email, first name, last name & Genre of all Rock Music listeners.
+Return your list ordered alphabetically by email starting with A*/
+SELECT DISTINCT email, first_name, last_name
+FROM customer
+JOIN invoice ON customer.customer_id = invoice.customer_id
+JOIN invoice_line ON invoice.invoice_id = invoice_line.invoice_id
+JOIN track ON invoice_line.track_id = track.track_id
+JOIN genre ON track.genre_id = genre.genre_id
+WHERE genre.name = 'ROCK'
+
+ORDER BY email
+
+
+/*Q2. Let's invite the artists who have written the most rock music in our dataset. Write a query that 
+returns the Artist name and total track count of the top 10 rock bands*/
+SELECT 
+	artist.name ,
+	COUNT(artist.name) AS Number_of_songs
+FROM
+    track
+JOIN album ON album.album_id = track.album_id
+JOIN artist ON artist.artist_id = album.artist_id
+JOIN genre ON track.genre_id = genre.genre_id
+WHERE genre.name = 'ROCK'
+
+GROUP BY artist.name
+ORDER BY Number_of_songs DESC
+OFFSET 0 ROWS FETCH NEXT 10 ROWS ONLY
+
+
+/*Q3. Return all the track names that have a song length longer than the average song length.
+Return the Name and Milliseconds for each track. Order by the song length with the longest songs 
+listed first. */
+SELECT 
+	name,
+	milliseconds
+FROM
+	track
+WHERE milliseconds > ( 
+	SELECT AVG(milliseconds) AS avg_track_length
+	FROM track)
+ORDER BY milliseconds DESC
+
+/* 
+SELECT
+	name,
+	milliseconds
+FROM
+	track
+WHERE milliseconds > 393599
+ORDER BY milliseconds DESC    */
